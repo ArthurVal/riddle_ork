@@ -1,0 +1,48 @@
+<!-- Launch file to launch ORK nodes (Linemod and/or Tabletop on an ActionLib server or not) 
+     Input Args : -> tabletop        = run or not tabletop as node
+                  -> linemod         = run or not linemod as node
+                  -> tabletop_server = run or not tabletop as action lib server
+                  -> linemod_server  = run or not linemod as action lib server
+        Default = tabletop        = 1
+                  linemod         = 1
+                  tabletop_server = 0
+                  linemod_server  = 0 -->
+
+<launch>
+
+  <!-- Args to enable or not the nodes -->
+	<arg name="tabletop" default="1" />
+	<arg name="linemod" default="1" />
+	<arg name="tabletop_server" default="0" />
+	<arg name="linemod_server" default="0" />
+
+  <group if="$(arg tabletop)">
+    <group if="$(arg tabletop_server)">
+      <!-- detection actionlib server with tabletop -->
+      <node pkg="object_recognition_ros" type="server" args="-c $(find object_recognition_tabletop)/conf/detection.object.ros.ork --node_name tabletop --action_name 'tabletop_recognize_objects'" name="tabletop_server">
+		    <remap from="/recognized_object_array" to="/tabletop_recognized_object_array"/>
+	    </node>
+    </group>
+
+    <!-- detection node with tabletop -->
+    <node pkg="object_recognition_core" type="detection" args="-c $(find object_recognition_tabletop)/conf/detection.object.ros.ork" name="tabletop" unless="$(arg tabletop_server)">
+		  <remap from="/recognized_object_array" to="/tabletop_recognized_object_array"/>
+	  </node>   
+  </group>
+
+
+  <group if="$(arg linemod)">
+    <group if="$(arg linemod_server)">
+      <!-- detection actionlib server with linemod -->
+      <node pkg="object_recognition_ros" type="server" args="-c $(find object_recognition_linemod)/conf/detection.ros.ork --visualize --node_name linemod --action_name 'linemod_recognize_objects'" name="linemod_server" respawn="true">
+		    <remap from="/recognized_object_array" to="/linemod_recognized_object_array"/>
+	    </node>
+    </group>
+
+    <!-- detection node with linemod -->
+    <node pkg="object_recognition_core" type="detection" args="-c $(find object_recognition_linemod)/conf/detection.ros.ork" name="linemod" respawn="true" unless="$(arg linemod_server)">
+		  <remap from="/recognized_object_array" to="/linemod_recognized_object_array"/>
+	  </node> 
+  </group>	
+
+</launch>
