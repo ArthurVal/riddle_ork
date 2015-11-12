@@ -1,0 +1,28 @@
+<package>
+	<name>riddle_ork</name>
+	<version>0.1.0</version>
+	<description>Meta package of ORK object detection for RIDDLE project</description>
+	<author>Arthur Valiente</author>
+	<maintainer email="valiente.arthur@gmail.com">Arthur Valiente</maintainer>
+	<license>BSD</license>
+
+	<buildtool_depend>catkin</buildtool_depend>
+
+	<run_depend>object_recognition_capture</run_depend>
+	<run_depend>object_recognition_linemod</run_depend>
+	<run_depend>object_recognition_tabletop</run_depend>
+	<run_depend>object_recognition_core</run_depend>
+	<run_depend>object_recognition_msgs</run_depend>
+	<run_depend>object_recognition_ros</run_depend>
+	<run_depend>object_recognition_ros_visualization</run_depend>
+	<run_depend>object_recognition_renderer</run_depend>
+	<run_depend>object_recognition_reconstruction</run_depend>
+	<run_depend>object_recognition_tod</run_depend>
+	<run_depend>object_recognition_transparent_objects</run_depend>
+	<run_depend>ork_morse_interface</run_depend>
+	
+	<export>
+		<metapackage/>
+	</export>
+
+</package>
